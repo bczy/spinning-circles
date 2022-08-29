@@ -6,10 +6,8 @@ export class SpinningCircle {
   private _engine : Engine = new Engine();
   get engine() : Engine { return this._engine};
 
-  private _entity = new WireframeShape(new CircleBufferGeometry(2,16), {});
   constructor() {
-    this._engine.entities.push(this._entity);
-    this._engine.scene.add(this._entity.getMesh());
+    const entity = new WireframeShape(new CircleBufferGeometry(2,16), {}, this._engine.scene);
     this.update();
   }
 

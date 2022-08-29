@@ -1,18 +1,24 @@
-import { Vector3 } from "three";
 import { Component } from "../Component";
 
 export class Transform extends Component{
+    constructor(private _position = [0, 0, 0], private _scale = 1){
+            super();
+    }
     update(): void {
         
     }
-    
-    private _position: Vector3;
-
-    get getPosition(): Vector3{
+    get position(): number[]{
         return this._position;
     }
 
-    set setPosition(position: Vector3){
+    set setPosition(position: number[]){
         this._position = position;
+    }
+    get getPosition(): number{
+        return this._scale;
+    }
+
+    set setScale(scale: number){
+        this._scale = scale;
     }
 }

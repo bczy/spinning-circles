@@ -1,5 +1,8 @@
-import { BufferGeometry, Mesh, MeshBasicMaterial, Vector3 } from 'three';
-import { Entity } from '../../engine/Entity';
+import { BufferGeometry, CircleBufferGeometry, Scene} from 'three';
+import { Material } from '../../engine/components/Material';
+import { Mesh } from '../../engine/components/Mesh';
+import { Transform } from '../../engine/components/Transform';
+import { GameEntity } from '../../engine/GameEntity';
 
 export type WireframedShapeData = {
   color?: number | string;
@@ -9,44 +12,32 @@ export type WireframedShapeData = {
   initialScale?: number;
 };
 
-export class WireframeShape extends Entity {
-  private mesh: Mesh;
-  private scaleFactor: number;
+export class WireframeShape extends GameEntity {
+  private _mesh: Mesh;
   
   constructor(
-    private geometry: BufferGeometry,
+    private _geometry: BufferGeometry,
     {
       position = [0,0,0],
-      scale = 4,
-      color = "#FF0000",
-      initialScale = 1,
-    }: WireframedShapeData
+      scale = 2
+    }: WireframedShapeData,
+    threeScene : Scene
   ) {
-    super();
-    const material = new MeshBasicMaterial({ color });
-    this.mesh = new Mesh(this.geometry);
-    material.wireframe = true;
-    this.mesh.material = material;
+    super(threeScene, new Mesh(new CircleBufferGeometry(1, 32)));
 
-    this.scaleFactor = scale;
+    this._components.push(new Transform(position, scale));
     
-    this.mesh.position.x = position[0];
-    this.mesh.position.y = position[1];
-    this.mesh.position.z = position[2];
+    const material = new Material();
+    this.addComponents(material);
 
-    if (initialScale) {
-      this.mesh.scale.x = initialScale | 0.375;
-      this.mesh.scale.y = initialScale | 0.375;
-      this.mesh.scale.z = initialScale | 0.375;
-    }
   }
 
-  public getMesh(): Mesh {
-    return this.mesh;
+  get mesh(): Mesh {
+    return this._mesh;
   }
 
-  public getGeometry(): BufferGeometry {
-    return this.geometry;
+  get geometry(): BufferGeometry {
+    return this._geometry;
   }
 
   public update(): void {
