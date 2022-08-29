@@ -1,4 +1,4 @@
-import { SpinningCircle } from "./SpinningCircles";
+import { SpinningCircle } from "./spinning-circles/SpinningCircles";
 import { onWindowResize } from './engine/graphics/Window';
 
 const spinningCircle = new SpinningCircle();

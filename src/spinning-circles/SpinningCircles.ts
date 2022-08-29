@@ -1,6 +1,6 @@
 import { CircleBufferGeometry } from 'three';
-import { Engine } from './engine/Engine';
-import { WireframeShape } from './game/entities/WireframedShape';
+import { Engine } from '../engine/Engine';
+import { WireframeShape } from './entities/WireframedShape';
 
 export class SpinningCircle {
   private _engine : Engine = new Engine();
