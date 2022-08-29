@@ -13,7 +13,6 @@ export type WireframedShapeData = {
 };
 
 export class WireframeShape extends GameEntity {
-  private _mesh: Mesh;
   
   constructor(
     private _geometry: BufferGeometry,
@@ -23,17 +22,18 @@ export class WireframeShape extends GameEntity {
     }: WireframedShapeData,
     threeScene : Scene
   ) {
-    super(threeScene, new Mesh(new CircleBufferGeometry(1, 32)));
+    super(threeScene, new Mesh(_geometry));
 
     this._components.push(new Transform(position, scale));
     
     const material = new Material();
+    
     this.addComponents(material);
 
   }
 
-  get mesh(): Mesh {
-    return this._mesh;
+  get mesah(): Mesh {
+    return this.mesh;
   }
 
   get geometry(): BufferGeometry {

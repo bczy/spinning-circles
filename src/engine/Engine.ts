@@ -2,8 +2,8 @@ import { Scene, WebGLRenderer, PerspectiveCamera } from "three";
 import { Entity } from "./Entity";
 import { GameEntity } from "./GameEntity";
 
-import { EffectComposer } from './graphics/postprocessing/EffectComposer';
-import { RenderPass } from './graphics/postprocessing/RenderPass';
+import { EffectComposer } from './postprocessing/EffectComposer';
+import { RenderPass } from './postprocessing/RenderPass';
 
 export class Engine{
     private _entites = new Array<Entity>();
