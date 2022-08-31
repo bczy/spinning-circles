@@ -2,15 +2,14 @@ import { Scene, WebGLRenderer, PerspectiveCamera } from "three";
 import { Entity } from "./Entity";
 import { GameEntity } from "./GameEntity";
 
-import { EffectComposer } from './postprocessing/EffectComposer';
-import { RenderPass } from './postprocessing/RenderPass';
+import { EffectComposer } from './vendor/threejs/EffectComposer';
+import { RenderPass } from './vendor/threejs/RenderPass';
 
-export class Engine{
+export class Engine {
     private _entites = new Array<Entity>();
     get entities() : Array<Entity>{ return this._entites };
     get scene() : Scene{ return this._scene };
 
-    private step = 0;
     private _scene = new Scene();
 
     public renderer = new WebGLRenderer();
@@ -25,8 +24,6 @@ export class Engine{
         this.renderer.setSize(window.innerWidth, window.innerHeight);
         
         this.camera.position.z = 11.125;
-        
-        this.update();
     }
 
     public addEntity(entity: Entity){
@@ -36,10 +33,15 @@ export class Engine{
     public addGameEntity(entity: GameEntity){
         this.addEntity(entity);
     }
-    
+
+    public start(): void {
+        this.update();
+    }
+
     public update() : void {
         this._entites.forEach(entity => entity.update());
         this.composer.render();
+        
         requestAnimationFrame(() => this.update());
     }
 }

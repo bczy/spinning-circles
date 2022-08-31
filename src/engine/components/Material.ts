@@ -1,18 +1,19 @@
 import { MeshBasicMaterial, Material as ThreeMaterial } from "three";
 import { Component } from "../Component";
+import { Mesh } from "./Mesh";
 
 export class Material extends Component{
 
     private _threeMaterial : ThreeMaterial;
 
-    constructor(
-        material? : ThreeMaterial
-        ){
+    constructor( _mesh: Mesh, material? : ThreeMaterial){
         super();
         if (!material){
             const threeMeshBasicMaterial = new MeshBasicMaterial( { color: "#FF0000"});
             threeMeshBasicMaterial.wireframe = true;
             this._threeMaterial = threeMeshBasicMaterial;
+        } else {
+            this.setThreeMaterial(material);
         }
     }
 
@@ -27,5 +28,4 @@ export class Material extends Component{
     update(): void {
         
     }
-    
 }
