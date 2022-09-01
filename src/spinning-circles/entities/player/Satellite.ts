@@ -1,12 +1,18 @@
-import { CircleBufferGeometry, Scene, Mesh} from 'three';
-import { GameEntity, Material, Transform } from '../../../engine/index';
+import { CircleBufferGeometry, Scene} from 'three';
+import { GameEntity, Material, Transform, Mesh } from '../../../engine/index';
 
 export class Satellite extends GameEntity {
 
   constructor(threeScene : Scene) {
 
     super(); 
-    threeScene.add(new Mesh(new CircleBufferGeometry(2,16)))
+    const geom = new CircleBufferGeometry(2,16)
+
+    this._components.push(new Material());
+
+    this.setMesh(new Mesh(geom));
+    
+    threeScene.add(this.mesh.threeMesh)
     this._components.push(new Transform([1, 0, 0], 1));
 
     const material = new Material(this.mesh);

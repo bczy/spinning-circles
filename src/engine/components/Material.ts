@@ -6,7 +6,7 @@ export class Material extends Component{
 
     private _threeMaterial : ThreeMaterial;
 
-    constructor( _mesh: Mesh, material? : ThreeMaterial){
+    constructor( _mesh?: Mesh, material? : ThreeMaterial){
         super();
         if (!material){
             const threeMeshBasicMaterial = new MeshBasicMaterial( { color: "#FF0000"});

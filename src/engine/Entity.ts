@@ -1,6 +1,5 @@
 import { generateUUID } from "three/src/math/MathUtils";
 import { Component } from "./Component";
-
 export abstract class Entity {
     protected _components = new Array<Component>();
     protected _children = new Array<Entity>();
@@ -8,7 +7,6 @@ export abstract class Entity {
     public abstract update(): void;
     
     constructor(private _id = generateUUID()){
-
     }
 
     public addComponent(component: Component){
@@ -19,9 +17,12 @@ export abstract class Entity {
         components.forEach(component => this._components.push(component));
     }
 
-    public getComponentsByType<T extends Component>(toto: typeof Component) : T[]{
-        console.log(toto)
-        return this._components.filter(component => typeof toto === typeof component ) as T[];
+    public getComponentsByType(componentType: string) : Component[]{
+        const muf = this._components.filter(component => {
+            console.log(componentType, component.constructor.name);
+            return componentType === component.constructor.name });
+        console.log(muf)
+        return muf 
     } 
     
     public get components(){

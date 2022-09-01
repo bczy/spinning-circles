@@ -13,14 +13,14 @@ export class Player extends GameEntity {
     threeScene : Scene) {
 
     super();
-    this._components.push(new Transform([0, 0, 0], 2));
+    this._components.push(new Transform([0, 1, 0], 2));
     const mesh = new Mesh(_geometry);
     this._components.push(mesh);
+    mesh.setThreeMesh(mesh.threeMesh);
     threeScene.add(mesh.threeMesh);
-    const muf = this.getComponentsByType<Transform>(Transform);
-    muf.forEach(as => {
-      console.log("muf player", as)
-      as.setPosition([100,1,1])
+    const position = this.getComponentsByType(Transform.name) as Transform[];
+    position.forEach(as => {
+      as.translate([1,1,2], mesh.threeMesh)
     })
 
     const material = new Material(this.mesh);

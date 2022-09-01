@@ -11,8 +11,9 @@ export class GameEntity extends Entity{
     get mesh(){
         return this._mesh;
     }
-    protected setMesh(_mesh: Mesh): void{
-        this._components.push(_mesh);
+    protected setMesh(mesh: Mesh): void{
+        this._components.push(mesh);
+        this._mesh = mesh
     }
     update(): void {
     }

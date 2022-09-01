@@ -7,9 +7,13 @@ export class Mesh extends Component{
         private _geometry : BufferGeometry
         ){
         super();
+        this._threeMesh = new ThreeMesh(this._geometry);
     }
     get threeMesh(){
         return this._threeMesh;
+    }
+    public setThreeMesh(mesh: ThreeMesh){
+        this._threeMesh = mesh;
     }
     update(): void {
         
