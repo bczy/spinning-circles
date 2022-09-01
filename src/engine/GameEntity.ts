@@ -1,5 +1,3 @@
-import { Scene } from 'three';
-
 import { Mesh } from './components/Mesh';
 import { Entity } from './Entity';
 
