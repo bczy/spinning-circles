@@ -18,11 +18,14 @@ export abstract class Entity {
     }
 
     public getComponentsByType(componentType: string) : Component[]{
-        const muf = this._components.filter(component => {
-            console.log(componentType, component.constructor.name);
+        return this._components.filter(component => 
+            componentType === component.constructor.name ); 
+    } 
+
+    public getComponentByType(componentType: string) : Component{
+        const componentIndex = this._components.findIndex(component => {
             return componentType === component.constructor.name });
-        console.log(muf)
-        return muf 
+        return this._components[componentIndex]; 
     } 
     
     public get components(){

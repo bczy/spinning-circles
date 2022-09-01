@@ -6,12 +6,9 @@ import { GameEntity, Transform, Material, Mesh } from '../../../engine/index';
 import { Satellite } from './Satellite';
 
 export class Player extends GameEntity {
-  private _satellite : GameEntity;
+  private _satellite: GameEntity;
 
-  constructor(
-    private _geometry: BufferGeometry,
-    threeScene : Scene) {
-
+  constructor(private _geometry: BufferGeometry, threeScene: Scene) {
     super();
     this._components.push(new Transform([0, 1, 0], 2));
     const mesh = new Mesh(_geometry);
@@ -19,15 +16,15 @@ export class Player extends GameEntity {
     mesh.setThreeMesh(mesh.threeMesh);
     threeScene.add(mesh.threeMesh);
     const position = this.getComponentsByType(Transform.name) as Transform[];
-    position.forEach(as => {
-      as.translate([1,1,2], mesh.threeMesh)
-    })
+    position.forEach((as) => {
+      as.translate([1, 1, 2], mesh.threeMesh);
+    });
 
     const material = new Material(this.mesh);
     this.addComponent(material);
 
-    this._components.push(material)
-    
+    this._components.push(material);
+
     this._satellite = new Satellite(threeScene);
     this._satellite.addComponent(material);
     this._children.push(this._satellite);
@@ -37,6 +34,5 @@ export class Player extends GameEntity {
     return this._geometry;
   }
 
-  public update(): void {
-  }
+  public update(): void {}
 }
