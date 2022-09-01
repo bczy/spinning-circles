@@ -1,8 +1,6 @@
-import { Mesh } from "./components/Mesh";
+import { Mesh } from './components/Mesh';
 
 export abstract class Component {
-    constructor(){
-        
-    }
-    abstract update(): void;
+  constructor() {}
+  abstract update(): void;
 }

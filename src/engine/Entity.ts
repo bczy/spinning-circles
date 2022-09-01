@@ -23,8 +23,8 @@ export abstract class Entity {
     } 
 
     public getComponentByType(componentType: string) : Component{
-        const componentIndex = this._components.findIndex(component => {
-            return componentType === component.constructor.name });
+        const componentIndex = this._components.findIndex(component => 
+            componentType === component.constructor.name);
         return this._components[componentIndex]; 
     } 
     
