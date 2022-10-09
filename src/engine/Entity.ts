@@ -1,12 +1,13 @@
-import { generateUUID } from "three/src/math/MathUtils";
 import { Component } from "./Component";
-export abstract class Entity {
+import { UUID } from "./utils/UUID";
+export abstract class Entity extends UUID{
     protected _components = new Array<Component>();
     protected _children = new Array<Entity>();
     
     public abstract update(): void;
     
-    constructor(private _id = generateUUID()){
+    constructor(){
+        super();
     }
 
     public addComponent(component: Component){
@@ -32,7 +33,7 @@ export abstract class Entity {
         return this._components;
     }
     
-    public get id(){
-        return this._id;
+    public get uuid(){
+        return this._uuid;
     }
 }

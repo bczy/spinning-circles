@@ -35,21 +35,43 @@ export class Engine {
   }
 
   public addEntity(entity: Entity) {
-    this.entities.push(entity);
+    this._entites.push(entity);
   }
 
-  public addGameEntity(entity: GameEntity) {
-    this.addEntity(entity);
+  public addGameEntity(gameEntity: GameEntity) {
+    this._entites.push(gameEntity);
   }
 
   public start(): void {
+    // TODO: state machine
     this.update();
   }
 
   public update(): void {
     this._entites.forEach((entity) => entity.update());
+    this.updateHud();
     this.composer.render();
-
     requestAnimationFrame(() => this.update());
+  }
+  public updateHud(): void {
+    this._entites.forEach(entity =>{ 
+      
+      const domEntity = document.getElementById(entity.uuid);
+      
+      if (!domEntity){
+        const section  = document.createElement("section");
+        section.id = entity.uuid;
+        section.innerHTML = entity.uuid;
+        document.getElementById("hud").appendChild(section)
+        entity.components.forEach(entry => {
+          const section  = document.createElement("article");
+          section.id = entry.uuid;
+          section.innerHTML = Object.keys(entry).toString();
+          document.getElementById("hud").appendChild(section)
+        })
+
+      }
+     
+    })
   }
 }

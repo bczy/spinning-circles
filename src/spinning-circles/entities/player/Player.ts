@@ -23,8 +23,6 @@ export class Player extends GameEntity {
     const material = new Material(this.mesh);
     this.addComponent(material);
 
-    this._components.push(material);
-
     this._satellite = new Satellite(threeScene);
     this._satellite.addComponent(material);
     this._children.push(this._satellite);

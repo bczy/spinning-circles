@@ -1,5 +1,6 @@
 import { CircleBufferGeometry } from 'three';
 import { Engine } from '../engine/Engine';
+import { onWindowResize } from '../engine/Window';
 import { Player } from './entities/player/Player';
 
 export class SpinningCircle {
@@ -13,6 +14,8 @@ export class SpinningCircle {
       new CircleBufferGeometry(2, 16),
       this._engine.scene
     );
+    this._engine.addGameEntity(player);
+    onWindowResize(this._engine.camera, this._engine.renderer);
     this._engine.start();
   }
 }
