@@ -1,12 +1,15 @@
 import { Scene, WebGLRenderer, PerspectiveCamera } from 'three';
 import { Entity } from './Entity';
 import { GameEntity } from './GameEntity';
+import { Hud } from './hud/Hud';
 
 import { EffectComposer } from './vendor/threejs/EffectComposer';
 import { RenderPass } from './vendor/threejs/RenderPass';
 
 export class Engine {
   private _entites = new Array<Entity>();
+  private _hud : Hud;
+
   get entities(): Array<Entity> {
     return this._entites;
   }
@@ -32,6 +35,7 @@ export class Engine {
     this.renderer.setSize(window.innerWidth, window.innerHeight);
 
     this.camera.position.z = 11.125;
+    this._hud = new Hud(this._entites);
   }
 
   public addEntity(entity: Entity) {
@@ -49,29 +53,12 @@ export class Engine {
 
   public update(): void {
     this._entites.forEach((entity) => entity.update());
-    this.updateHud();
     this.composer.render();
+    this._hud.update();
     requestAnimationFrame(() => this.update());
   }
-  public updateHud(): void {
-    this._entites.forEach(entity =>{ 
-      
-      const domEntity = document.getElementById(entity.uuid);
-      
-      if (!domEntity){
-        const section  = document.createElement("section");
-        section.id = entity.uuid;
-        section.innerHTML = entity.uuid;
-        document.getElementById("hud").appendChild(section)
-        entity.components.forEach(entry => {
-          const section  = document.createElement("article");
-          section.id = entry.uuid;
-          section.innerHTML = Object.keys(entry).toString();
-          document.getElementById("hud").appendChild(section)
-        })
 
-      }
-     
-    })
+  public updateHud(): void {
+    
   }
 }

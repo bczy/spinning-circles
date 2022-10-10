@@ -4,7 +4,7 @@ export function onWindowResize(
   camera: PerspectiveCamera,
   renderer: WebGLRenderer
 ): void {
-  camera.aspect =( window.innerWidth - 200)/ window.innerHeight;
+  camera.aspect =( window.innerWidth - 350)/ window.innerHeight;
   camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth- 200, window.innerHeight);
+  renderer.setSize(window.innerWidth- 350, window.innerHeight);
 }

@@ -2,9 +2,10 @@ import { Component } from '../Component';
 
 import { Mesh } from 'three';
 export class Transform extends Component {
+  protected _name: string = "Transform";
+  
   constructor(public _position = [0, 0, 0], public _scale = 1) {
     super();
-    this._gameVariables.push()
   }
 
   update(): void {}

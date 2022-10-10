@@ -3,6 +3,7 @@ import { Component } from '../Component';
 import { Mesh } from './Mesh';
 
 export class Material extends Component {
+  protected _name = "Material";
   private _threeMaterial: ThreeMaterial;
 
   constructor(mesh?: Mesh, material?: ThreeMaterial) {

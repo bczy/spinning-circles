@@ -2,6 +2,7 @@ import { BufferGeometry, Mesh as ThreeMesh } from 'three';
 import { Component } from '../Component';
 
 export class Mesh extends Component {
+  protected _name: string = "Mesh";
   private _threeMesh: ThreeMesh;
   constructor(private _geometry: BufferGeometry) {
     super();
