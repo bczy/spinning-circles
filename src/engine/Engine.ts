@@ -1,4 +1,5 @@
 import { Scene, WebGLRenderer, PerspectiveCamera } from 'three';
+import { Component } from './Component';
 import { Entity } from './Entity';
 import { GameEntity } from './GameEntity';
 import { Hud } from './hud/Hud';
@@ -54,6 +55,9 @@ export class Engine {
     console.log("game entity added:", this._entites)
   }
 
+  public createGamEntity(components = new Array<Component>){
+
+  }
   public start(): void {
     // TODO: state machine
     this.update();

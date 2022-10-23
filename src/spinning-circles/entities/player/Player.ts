@@ -1,5 +1,4 @@
 import { BufferGeometry, Scene } from 'three';
-import { Component } from '../../../engine/Component';
 
 import { GameEntity, Transform, Material, Mesh } from '../../../engine/index';
 

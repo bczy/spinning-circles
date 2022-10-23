@@ -45,25 +45,25 @@ createMachine<EngineContext, EngineEvent, EngineState>({
       },
     },
     loading: {
-      entry: () => {console.log("So now I'm loading")},
+      entry: () => {console.log("Loading...")},
       on: {
         START_ENGINE: {
           actions: (context, muf) => {
             context.engine.hud.init();
-            console.log("engine started", muf, machine)
+            console.log("Engine started.", muf, machine)
           },
           target: 'editing'
         },
       },
     },
     editing: {
-      entry: () => {console.log("So now I'm editing")},
+      entry: () => {
+        console.log("Edit mode...")
+      },
       on: {
         ADD_GAME_ENTITY: {
           actions:(context) => {
-            console.log("ok tough one")
-            context.engine.addGameEntity(new GameEntity())
-            console.log("game entity added?")
+            context.engine.addGameEntity(new GameEntity());
           }
         },
       },

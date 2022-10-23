@@ -1,7 +1,25 @@
+body{
+    font-family: 'arial';
+}
+
 #hud{
     position:fixed;
     right:0;
-
     float:right;
     width: 350px;
+    
+}
+
+#controls{
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+}
+
+#entities{
+    margin: 0px 20px;
+}
+.entity{
+    margin: 10px 5px;    
+    font-size: 12px;
 }
