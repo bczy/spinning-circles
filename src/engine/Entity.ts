@@ -1,32 +1,9 @@
-import { createMachine } from "../../node_modules/xstate/lib/Machine";
 import { Component } from "./Component";
 import { UUID } from "./utils/UUID";
 export abstract class Entity extends UUID{
     protected _components = new Array<Component>();
     protected _children = new Array<Entity>();
     
-    private _machine = createMachine({
-        initial: 'idle',
-        states: {
-          idle: {
-            on: {
-              FETCH: 'loadingUser'
-            }
-          },
-          loadingUser: {
-            tags: ['loading']
-            // ...
-          },
-          loadingFriends: {
-            tags: ['loading']
-            // ...
-          },
-          editing: {
-            // ...
-          }
-        }
-      });
-
     public abstract update(): void;
     
     constructor(){

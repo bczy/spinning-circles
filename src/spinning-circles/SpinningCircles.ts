@@ -1,21 +1,11 @@
-import { CircleBufferGeometry } from 'three';
-import { Engine } from '../engine/Engine';
-import { onWindowResize } from '../engine/Window';
-import { Player } from './entities/player/Player';
+import { interpret } from 'xstate';
+import EngineStateMachine from '../engine/StateMachines/EngineStateMachine';
 
 export class SpinningCircle {
-  private _engine: Engine = new Engine();
-  get engine(): Engine {
-    return this._engine;
-  }
+  private _engineService = EngineStateMachine;
 
   constructor() {
-    const player = new Player(
-      new CircleBufferGeometry(2, 16),
-      this._engine.scene
-    );
-    this._engine.addGameEntity(player);
-    onWindowResize(this._engine.camera, this._engine.renderer);
-    this._engine.start();
+    this._engineService.start().send("INIT_DONE");
+    this._engineService.send("START_ENGINE");
   }
 }

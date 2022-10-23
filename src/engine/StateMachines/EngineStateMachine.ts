@@ -1,25 +1,76 @@
+import { createMachine, interpret } from "xstate";
+import { Engine } from "../Engine";
+import { GameEntity } from "../GameEntity";
 
-import { createMachine } from "../../../node_modules/xstate/lib/Machine";
+export interface EngineContext {
+  engine: Engine;
+}
 
-export default 
-/** @xstate-layout N4IgpgJg5mDOIC5QAoC2BDAxgCwJYDswBKAOlwgBswBiAMQFEAVAYQAlFQAHAe1lwBdc3fBxAAPRACYADNJLSAHAFYAnAHYFAFk3SVCgGyaFAGhABPKQGYAjCR0LlCyZcuSlzgL5fT+bhDiiaFh4hKTkVKI8fILCohII1tb6djrWRtJqkvrWekqmFgiSbiQq0vpukg5KDtZK3iBBOATEJBTc6BAEUACqsGAATpG8AkIiSOKIltKaJDLSSqqJKkrZKvlSxaXl7lU1dR6mjSEtbR1dtP24YPgQ8ONRI7Hj8ZqS6wgKKiX6CmpKuqt9PNJPUjs1SJARvgoENoqM4oh9F8lNYpjJXJo1EZJJp3rU1CVLH9pDlnCpJNZ5qCME1QrDHmNQPFrCZzIgWfJZFzudy1F4vEA */
-createMachine({
-  id: '(machine)',
+const engineContext : EngineContext = { engine: new Engine() };
+
+export type EngineEvent = 
+| { type: 'ADD_GAME_ENTITY' } 
+| { type: 'START_ENGINE' } 
+| { type: 'INIT_DONE' };
+
+export type EngineState =
+| {
+  value: 'idle',
+  context: EngineContext 
+} | {
+  value: 'onEdit',
+  context: EngineContext
+} | {
+  value: 'editing',
+  context: EngineContext
+};
+
+const machine = 
+/** @xstate-layout N4IgpgJg5mDOIC5QAoC2BDAxgCwJYDswBKAOlwgBswBiA3AFwBEB7QgbQAYBdRUAB2awGuVrxAAPRAEYA7ACYSADjkA2AMwAWDYsUaArMs0AaEAE9pMgJwl5HPRw4qOUjXLWyAvh5NoseQqQUzOgQBFDUsPToAE70AKL4UARgnDxIIAJC9CL4YpIIGjKKJPZSljIOBjL6LibmCHJy1hxy2pp2cooqTnpePhg4yaSQwonUIRAAkvRgqKlimcKi6fl6miQclioaHGqtulLddYjKJFtqevaWGpYcXXde3iD4zBBwYr6DAWSUYAuCS1yK0Q2xITg0Ul0amuKkua2OCFk1gq1WqchkKhkaxkMj6IE+-mIJCCITC-yyOTyiHc1lckMslj06ik0JkCKRNg41T0WgqO3cijxBKGJBG2US5MBVIQa2R3XKujuVj0cnZihkJDkuykTUhijU2ykQoGhNIfAo6FMZPSi2yy1AqzUYMs6M6MPkTguCL2KhIsjUOI0Fz1WmNfhFfHQAFdYJBJXagQ7EK4Ng5nHIWXoXJ0pAiIVIzlyGTJ2jdqmGvsR45TgQgALR6M4MyzqrraPQyekIhtN5vq3aw9QqR4eIA */
+createMachine<EngineContext, EngineEvent, EngineState>({
+  id: 'EngineStateMachine',
   initial: 'idle',
+  schema: {
+    context: engineContext as EngineContext,
+    events: {} as EngineEvent
+  },
+  context: engineContext,
+  predictableActionArguments: true,
   states: {
     idle: {
       on: {
-        FETCH: {
-          target: 'loadingUser',
+        INIT_DONE: {
+          target: 'loading',
         },
       },
     },
-    loadingUser: {
-      tags: 'loading',
+    loading: {
+      entry: () => {console.log("So now I'm loading")},
+      on: {
+        START_ENGINE: {
+          actions: (context, muf) => {
+            context.engine.hud.init();
+            console.log("engine started", muf, machine)
+          },
+          target: 'editing'
+        },
+      },
     },
-    loadingFriends: {
-      tags: 'loading',
+    editing: {
+      entry: () => {console.log("So now I'm editing")},
+      on: {
+        ADD_GAME_ENTITY: {
+          actions:(context) => {
+            console.log("ok tough one")
+            context.engine.addGameEntity(new GameEntity())
+            console.log("game entity added?")
+          }
+        },
+      },
     },
-    editing: {},
+    playing: {},
+    paused: {},
   },
 });
+
+export default interpret(machine);

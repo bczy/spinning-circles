@@ -1,12 +1,25 @@
+import { BaseActionObject, interpret, Interpreter, ResolveTypegenMeta, ServiceMap, TypegenDisabled } from "xstate";
 import { Entity } from "../Entity";
+import machine, { EngineContext, EngineEvent, EngineState } from "../StateMachines/EngineStateMachine";
 
 export class Hud{
+    private _engineService: Interpreter<EngineContext, any, EngineEvent, EngineState, ResolveTypegenMeta<TypegenDisabled, EngineEvent, BaseActionObject, ServiceMap>> ;
     public constructor(private _engineEntities : Array<Entity>){
-        this.init();
+        
     }
     public update(){
     }
-    private init(){
+    public addGameEntity(){
+      console.log("sending game entity", this._engineService)
+      this._engineService.send("ADD_GAME_ENTITY")
+    }
+    public init(){
+        this._engineService = machine;
+        const addItem = document.createElement('button');
+        addItem.textContent = "+";
+        document.getElementById("hud").appendChild(addItem);
+        addItem.addEventListener("click", () => { this.addGameEntity()});
+
         this._engineEntities.forEach(entity =>{ 
           
           const domEntity = document.getElementById(entity.uuid);
