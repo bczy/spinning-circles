@@ -51,14 +51,13 @@ export class Engine {
 
   public addGameEntity(gameEntity: GameEntity) {
     this._entites.push(gameEntity);
-    this._scene.add(gameEntity.mesh.threeMesh)
-    console.log("Game entity added: ", this._entites);
+    this._scene.add(gameEntity.mesh.threeMesh);
   }
 
-  public createGameEntity(components = new Array<Component>, mesh = new Mesh()){
+  public createGameEntity(components = new Array<Component>(), mesh = new Mesh()){
     const entity = new GameEntity();
     entity.addComponents(components);
-    this.entities.push(entity);
+    return entity;
   }
   public start(): void {
     // TODO: state machine

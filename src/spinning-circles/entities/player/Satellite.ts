@@ -19,3 +19,5 @@ export class Satellite extends GameEntity {
 
   public update(): void {}
 }
+
+ 

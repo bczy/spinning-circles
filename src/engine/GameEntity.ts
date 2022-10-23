@@ -9,9 +9,9 @@ export class GameEntity extends Entity {
   constructor() {
     super();
     this._mesh = new Mesh(new CircleBufferGeometry(1, 16))
-    this._components.push(new Transform([0, 2, 0], 2));
     this._components.push(this._mesh);
     this._components.push(new Material(this._mesh));
+    this._components.push(new Transform([0, 2, 0], 2, this._mesh.threeMesh));
   }
   get mesh() {
     return this._mesh;
