@@ -1,4 +1,3 @@
-import { interpret } from 'xstate';
 import EngineStateMachine from '../engine/StateMachines/EngineStateMachine';
 
 export class SpinningCircle {

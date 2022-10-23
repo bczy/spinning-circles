@@ -1,9 +1,8 @@
-import { Scene, WebGLRenderer, PerspectiveCamera } from 'three';
+import { Scene, WebGLRenderer, PerspectiveCamera, Mesh } from 'three';
 import { Component } from './Component';
 import { Entity } from './Entity';
 import { GameEntity } from './GameEntity';
 import { Hud } from './hud/Hud';
-import EngineStateMachine from './StateMachines/EngineStateMachine';
 
 import { EffectComposer } from './vendor/threejs/EffectComposer';
 import { RenderPass } from './vendor/threejs/RenderPass';
@@ -16,9 +15,11 @@ export class Engine {
   get entities(): Array<Entity> {
     return this._entites;
   }
+
   get scene(): Scene {
     return this._scene;
   }
+
   get hud(): Hud {
     return this._hud;
   }
@@ -27,22 +28,20 @@ export class Engine {
   public renderer = new WebGLRenderer();
   private composer: EffectComposer;
 
-  public camera = new PerspectiveCamera(
-    75,
-    window.innerWidth / window.innerHeight,
-    0.1
-  );
+  public camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1);
 
   public constructor() {
-    console.log("Engine constructor...")
     this.composer = new EffectComposer(this.renderer);
     this.composer.addPass(new RenderPass(this._scene, this.camera));
 
     this.renderer.setSize(window.innerWidth, window.innerHeight);
-
+    
     this.camera.position.z = 11.125;
     this._hud = new Hud(this._entites);
     document.body.appendChild(this.renderer.domElement);
+    window.addEventListener('resize', () =>{
+      onWindowResize(this.camera, this.renderer);
+    });
     onWindowResize(this.camera, this.renderer);
   }
 
@@ -52,11 +51,14 @@ export class Engine {
 
   public addGameEntity(gameEntity: GameEntity) {
     this._entites.push(gameEntity);
-    console.log("game entity added:", this._entites)
+    this._scene.add(gameEntity.mesh.threeMesh)
+    console.log("Game entity added: ", this._entites);
   }
 
-  public createGamEntity(components = new Array<Component>){
-
+  public createGameEntity(components = new Array<Component>, mesh = new Mesh()){
+    const entity = new GameEntity();
+    entity.addComponents(components);
+    this.entities.push(entity);
   }
   public start(): void {
     // TODO: state machine

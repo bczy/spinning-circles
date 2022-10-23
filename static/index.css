@@ -13,13 +13,29 @@ body{
 #controls{
     display: flex;
     flex-direction: column;
-    gap: 11px;
+    gap: 10px;
 }
 
 #entities{
     margin: 0px 20px;
+    overflow: scroll;
 }
+
 .entity{
     margin: 10px 5px;    
     font-size: 12px;
+}
+
+.component {
+    margin: 10px 0px;
+    border: 1px solid #ccc;
+    width: 300px;
+    padding: 2px 5px;
+}
+
+#entityList {
+    overflow: scroll;
+    height: 100%;
+    position: fixed;
+    width: 100%;
 }

@@ -15,7 +15,7 @@ export class Hud{
     public createDomElement(tagType: string, uuid: string){
       const tag = document.createElement(tagType)
       tag.id = uuid;
-      tag.innerHTML = uuid;
+      tag.innerHTML = `<b>uuid:</b> <i>${uuid}</i>`;
       return tag;
     }
 
@@ -46,20 +46,22 @@ export class Hud{
         if (!domEntity){
           const section  = this.createDomElement("section", entity.uuid);
           section.className = "entity";
-          this._rootDom.appendChild(section);
-          entity.components.forEach(entry => {
-            const section  = document.createElement("article");
-            section.id = entry.uuid;
-            const entries = Object.keys(entry)
-                              .filter(key => key !== "uuid")
-                              .map(key => `${key.split("_")[1]} ${entry[key]}`);
+          document.getElementById("entityList").appendChild(section);
+          entity.components.forEach(component => {
+            const componentArticle = document.createElement("article");
+            componentArticle.id = component.uuid;
+            componentArticle.innerHTML = `<b>${component.name}</b>`;
+            componentArticle.className = "component"
+            const properties = Object.keys(component)
+                              .filter(propertyKey => propertyKey !== "_uuid" && propertyKey !== "_name")
+                              .map(propertyKey => `${propertyKey.split("_")[1]} ${component[propertyKey]}`);
                               
-            entries.forEach(entry => {
+            properties.forEach(entry => {
               const d = document.createElement('div')
               d.innerHTML = entry;
-              section.appendChild(d);
-            })
-            this._rootDom.appendChild(section)
+              componentArticle.appendChild(d);
+              section.appendChild(componentArticle)
+            });
           })
           const addComponentButton = document.createElement("button");
           addComponentButton.textContent = "+"

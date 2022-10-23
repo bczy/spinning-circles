@@ -10,7 +10,7 @@ export class Material extends Component {
     super();
     if (!material) {
       const threeMeshBasicMaterial = new MeshBasicMaterial({
-        color: '#FF0000',
+        color: 'rgb(0, 255, 0)',
       });
       threeMeshBasicMaterial.wireframe = true;
       this._threeMaterial = threeMeshBasicMaterial;

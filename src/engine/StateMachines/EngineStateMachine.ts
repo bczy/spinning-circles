@@ -50,6 +50,7 @@ createMachine<EngineContext, EngineEvent, EngineState>({
         START_ENGINE: {
           actions: (context, muf) => {
             context.engine.hud.init();
+            context.engine.start();
             console.log("Engine started.", muf, machine)
           },
           target: 'editing'
