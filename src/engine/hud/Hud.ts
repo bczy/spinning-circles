@@ -1,3 +1,4 @@
+import { Raycaster } from "three";
 import { BaseActionObject, Interpreter, ResolveTypegenMeta, ServiceMap, TypegenDisabled } from "xstate";
 import { Entity } from "../Entity";
 import machine, { EngineContext, EngineEvent, EngineState } from "../StateMachines/EngineStateMachine";
@@ -5,6 +6,7 @@ import machine, { EngineContext, EngineEvent, EngineState } from "../StateMachin
 export class Hud{
     private _engineService: Interpreter<EngineContext, any, EngineEvent, EngineState, ResolveTypegenMeta<TypegenDisabled, EngineEvent, BaseActionObject, ServiceMap>> ;
     private _rootDom = document.getElementById("hud")
+    private _raycaster: Raycaster;
     public constructor(private _engineEntities : Array<Entity>){
         
     }
@@ -24,7 +26,7 @@ export class Hud{
       this.refresh()
     }
 
-    public init(){
+    public init(context: EngineContext){
         this._engineService = machine;
         const addButton = document.createElement('button');
         const refreshButton = document.createElement('button');
@@ -35,7 +37,6 @@ export class Hud{
         controls.appendChild(refreshButton);
         addButton.addEventListener("click", () => { this.addGameEntity()});
         refreshButton.addEventListener("click", () => { this.refresh()});
-          
     }
 
     private refresh(){

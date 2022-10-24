@@ -49,7 +49,7 @@ createMachine<EngineContext, EngineEvent, EngineState>({
       on: {
         START_ENGINE: {
           actions: (context, muf) => {
-            context.engine.hud.init();
+            context.engine.hud.init(context);
             context.engine.start();
             console.log("Engine started.", muf, machine)
           },

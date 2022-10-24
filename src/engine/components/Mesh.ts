@@ -7,6 +7,7 @@ export class Mesh extends Component {
   constructor(private _geometry: BufferGeometry) {
     super();
     this._threeMesh = new ThreeMesh(this._geometry);
+    this._threeMesh.userData = { engineComponent : this };
   }
   get threeMesh() {
     return this._threeMesh;
