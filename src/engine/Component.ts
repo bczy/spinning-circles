@@ -1,6 +1,13 @@
+import { Mesh } from "three";
 import { generateUUID } from "three/src/math/MathUtils";
 
-export type ComponentProperty = number|Array<number>|string|object;
+type ValueTypes = number|Array<number>|string|Mesh|object;
+
+export type ComponentProperty = {
+  value: ValueTypes,
+  callback: (e) => void
+};
+
 export abstract class Component{
   private _properties = new Map<string, ComponentProperty>();
   private _uuid = generateUUID();
@@ -16,17 +23,18 @@ export abstract class Component{
     return this._uuid;
   }
   
-  public addProperty(id: string, value: ComponentProperty){
-    this._properties.set(id, value);
+  public addProperty(id: string, value: ValueTypes, callback){
+    this._properties.set(id, {value, callback});
   }
 
   public getProperty<ComponentProperty>(id: string) : ComponentProperty{
     return this._properties.get(id) as ComponentProperty;
   }
 
-  public updateProperty(id: string, value: ComponentProperty){
+  public updateProperty(id: string, value: ValueTypes){
     if (this._properties.get(id)){
-      this._properties.set(id, value);
+      this._properties.set(id, {value, callback: this._properties.get(id).callback});
+      this._properties.get(id).callback(value);
     }
   }
 }

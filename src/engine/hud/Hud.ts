@@ -1,5 +1,6 @@
 import { Raycaster } from "three";
 import { BaseActionObject, Interpreter, ResolveTypegenMeta, ServiceMap, TypegenDisabled } from "xstate";
+import { Transform } from "../components/Transform";
 import { Entity } from "../Entity";
 import machine, { EngineContext, EngineEvent, EngineState } from "../StateMachines/EngineStateMachine";
 
@@ -55,8 +56,41 @@ export class Hud{
 
             Array.from(component.properties.keys()).forEach(propertyKey => {
               const d = document.createElement('div');
-              d.innerHTML = `${propertyKey}: ${component.properties.get(propertyKey).toString()}`
+              const propertyValue = component.properties.get(propertyKey);
+              d.innerHTML = `${propertyKey}: `;
               componentArticle.appendChild(d);
+              
+              if (propertyValue.value instanceof Array<number>){
+                d.className = "inputBox";
+                propertyValue.value.forEach((v,i) => {
+                  const input = document.createElement('input');
+                  input.type = "number";
+                  input.style.width = "50px";
+                  input.value = v.toString();
+                  d.appendChild(input);
+                  d.addEventListener("change", function(i){
+                    return function (e : InputEvent){
+                      const transform = component as Transform;
+                      const properties = Array.from(d.children).map(v => v as HTMLInputElement)
+                      transform.updateProperty(propertyKey, properties.map(p => p.value));
+                    }
+                  }(i))
+                })
+              } else if (typeof(propertyValue.value) === "string" || typeof(propertyValue.value) === "number" ){
+                const input = document.createElement('input');
+                  if (typeof(propertyValue.value) === "string"){
+                    input.value = propertyValue.value;
+                  }
+                  else  if (typeof(propertyValue.value) === "number"){
+                    input.value = propertyValue.value.toString();
+                    input.type = "number";
+                    input.style.width = "50px";
+                  }
+                  d.appendChild(input);
+                  d.onchange = (e : InputEvent) => {
+                    component.updateProperty(propertyKey,Number((e.target as HTMLInputElement).value))
+                  }
+              }
             })
             entitySection.appendChild(componentArticle)
           })

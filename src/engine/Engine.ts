@@ -47,7 +47,6 @@ export class Engine {
 
   public constructor() {
     this._pointer = new Vector2(0, 0);
-    console.log(this._pointer);
     this.composer = new EffectComposer(this.renderer);
     this.composer.addPass(new RenderPass(this._scene, this.camera));
 
@@ -100,7 +99,6 @@ export class Engine {
     return entity;
   }
   public start(): void {
-    // TODO: state machine
     this.update();
   }
 

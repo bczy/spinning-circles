@@ -1,6 +1,6 @@
-import { Component } from '../Component';
+import { Component, ComponentProperty } from '../Component';
 
-import { Mesh } from 'three';
+import { Euler, Mesh, Quaternion, Vector3 } from 'three';
 
 export class Transform extends Component {
   protected _name: string = "Transform";
@@ -11,11 +11,14 @@ export class Transform extends Component {
     mesh?: Mesh) 
   {
       super();
-      this.addProperty("position", position);
-      this.addProperty("scale", scale);
-      this.addProperty("mesh", mesh);
+      this.init(position, scale, mesh)
   }
-
+  init(position: Array<number>, scale: number, mesh?: Mesh) : void {
+    this.addProperty("position", position, ((value: number[]) => this.setPosition(value)));
+    this.addProperty("rotation", [0,0,0], ((value: number[]) => this.setRotation(value)));
+    this.addProperty("scale", scale, (((value: number) => this.setScale(value))));
+    this.addProperty("mesh", mesh, (e: any)=>{ console.log(e)});
+  }
   update(): void {}
 
   get position(): Array<number> {
@@ -35,19 +38,28 @@ export class Transform extends Component {
   }
 
   public setPosition(position: number[]): Transform {
-    this.updateProperty("position", position);
-
-    const mesh = this.getProperty<Mesh>("mesh");
+    const mesh = this.getProperty<ComponentProperty>("mesh").value as unknown as Mesh;
     mesh.position.setX(position[0]);
-    mesh.position.setY(position[0]);
-    mesh.position.setZ(position[0]);
+    mesh.position.setY(position[1]);
+    mesh.position.setZ(position[2]);
     return this;
   }
   get getPosition(): Array<number> {
     return this.getProperty("position");
   }
 
-  set setScale(scale: number) {
-    this.updateProperty("scale", scale);
+  public setRotation(rotation: number[]): Transform {
+    const mesh = this.getProperty<ComponentProperty>("mesh").value as unknown as Mesh;
+    const q = new Euler(rotation[0] / 90, rotation[1] / 90, rotation[2] / 90);
+    mesh.setRotationFromEuler(q)
+    return this;
+  }
+
+  public setScale(scale: number) {
+    //this.updateProperty("scale", scale);
+    const mesh = this.getProperty<ComponentProperty>("mesh").value as unknown as Mesh;
+    mesh.scale.setX(scale);
+    mesh.scale.setY(scale);
+    mesh.scale.setZ(scale);
   }
 }
