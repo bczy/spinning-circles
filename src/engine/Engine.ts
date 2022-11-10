@@ -24,7 +24,7 @@ export class Engine {
   private _raycaster: Raycaster;
   private _pointer = new Vector2();
   private _lastIntersected: any;
-  private control: TransformControls<PerspectiveCamera>;
+  public control: TransformControls<PerspectiveCamera>;
 
   get entities(): Array<Entity> {
     return this._entites;

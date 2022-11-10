@@ -48,16 +48,16 @@ export class Hud {
     document.getElementById('refresh').addEventListener('mousedown', () => {
       this.refresh();
     });
-    window.addEventListener( 'keydown', function ( event ) {
+    document.addEventListener( 'keydown',  event  => {
 
       switch ( event.keyCode ) {
 
         case 87: // W
-          //this.controls.setMode( 'translate' );
+          this._engineService.machine.context.engine.control.setMode( 'translate' );
           break;
 
         case 69: // E
-          //control.setMode( 'rotate' );
+          this._engineService.machine.context.engine.control.setMode( 'rotate' );
           break;
       }});
   }
@@ -82,9 +82,14 @@ export class Hud {
         inputs.forEach((input: HTMLInputElement, i ) => { 
           if (input.id === entity.getComponentByType('Transform').uuid){
             const transformInputs = Array.from(Array.from(document.getElementById(input.id).children)[1].children) as Array<HTMLInputElement>;
+            const rotateInputs = Array.from(Array.from(document.getElementById(input.id).children)[2].children) as Array<HTMLInputElement>;
             transformInputs[0].value = entity.mesh.threeMesh.position.x.toString();
             transformInputs[1].value = entity.mesh.threeMesh.position.y.toString();
             transformInputs[2].value = entity.mesh.threeMesh.position.z.toString();
+            rotateInputs[0].value = (entity.mesh.threeMesh.rotation.x * 180).toString();
+            rotateInputs[1].value = entity.mesh.threeMesh.rotation.y.toString();
+            rotateInputs[2].value = entity.mesh.threeMesh.rotation.z.toString();
+          
           }
         })
         }
