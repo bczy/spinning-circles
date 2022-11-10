@@ -14,9 +14,9 @@ export class Player extends GameEntity {
     this._components.push(mesh);
     mesh.setThreeMesh(mesh.threeMesh);
     threeScene.add(mesh.threeMesh);
-    const position = this.getComponentsByType(Transform.name) as Transform[];
+    const position = this.getComponentsByType(Transform.name) as Transform[];  
     position.forEach((as) => {
-      as.translate([1, 1, 2]);
+      
     }); 
 
     const material = new Material(this.mesh);

@@ -1,9 +1,9 @@
 import { generateUUID } from "three/src/math/MathUtils";
-import { Component } from "./Component";
+import { Component } from "../Component";
 export abstract class Entity {
     protected _components = new Array<Component>();
     protected _children = new Array<Entity>();
-    private _uuid = generateUUID();
+    protected _uuid = generateUUID();
     public abstract update(): void;
     
     constructor(){

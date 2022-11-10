@@ -35,6 +35,8 @@ export abstract class Component{
     if (this._properties.get(id)){
       this._properties.set(id, {value, callback: this._properties.get(id).callback});
       this._properties.get(id).callback(value);
+    } else {
+      console.debug("Property not found", id, this._name, this._properties)
     }
   }
 }

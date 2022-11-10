@@ -4,12 +4,14 @@ import {
   PerspectiveCamera,
   Mesh,
   Raycaster,
-  Vec2,
   Vector2,
 } from 'three';
+import { TransformControls } from 'three-stdlib';
+
+
 import { Component } from './Component';
-import { Entity } from './Entity';
-import { GameEntity } from './GameEntity';
+import { Entity } from './entities/Entity';
+import { GameEntity } from './entities/GameEntity';
 import { Hud } from './hud/Hud';
 
 import { EffectComposer } from './vendor/threejs/EffectComposer';
@@ -22,6 +24,7 @@ export class Engine {
   private _raycaster: Raycaster;
   private _pointer = new Vector2();
   private _lastIntersected: any;
+  private control: TransformControls<PerspectiveCamera>;
 
   get entities(): Array<Entity> {
     return this._entites;
@@ -51,8 +54,12 @@ export class Engine {
     this.composer.addPass(new RenderPass(this._scene, this.camera));
 
     this.renderer.setSize(window.innerWidth, window.innerHeight);
-
-    this.camera.position.z = 11.125;
+    this.control = new TransformControls( this.camera, this.renderer.domElement );
+    this.control.addEventListener('change', (e) => {
+      this._hud.updateValues(this._lastIntersected.uuid)
+    })
+    this.scene.add(this.control)
+    this.camera.position.z = 12.5;
     this._hud = new Hud(this._entites);
 
     document.body.appendChild(this.renderer.domElement);
@@ -64,8 +71,8 @@ export class Engine {
     document.addEventListener('mousemove', (e) => {
       this.onPointerMove(e);
     });
-    document.addEventListener('click', (e) => {
-      this.onPointerClick(e);
+    document.addEventListener('mousedown', (e) => {
+      this.onPointerDown(e);
     });
     this._raycaster = new Raycaster();
   }
@@ -74,9 +81,11 @@ export class Engine {
     this._entites.push(entity);
   }
 
-  private onPointerClick(e: Event) {
+  private onPointerDown(e: Event) {
     if (this._lastIntersected){
       this._lastIntersected.material.color = { r: 0, g: 1, b: 1}
+
+      this.control.attach(this._lastIntersected)
     }
   }
 
@@ -120,7 +129,7 @@ export class Engine {
       }
     } else {
       if (this._lastIntersected) this._lastIntersected.material.color = { r: 0, g: 1, b: 0 };
-      this._lastIntersected = undefined;
+      //this._lastIntersected = undefined;
     }
 
     requestAnimationFrame(() => this.update());

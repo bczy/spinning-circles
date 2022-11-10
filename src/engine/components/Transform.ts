@@ -1,6 +1,6 @@
 import { Component, ComponentProperty } from '../Component';
 
-import { Euler, Mesh, Quaternion, Vector3 } from 'three';
+import { Euler, Mesh } from 'three';
 
 export class Transform extends Component {
   protected _name: string = "Transform";
@@ -25,23 +25,9 @@ export class Transform extends Component {
     return this.getProperty<Array<number>>("position");
   }
 
-  public translate(position: number[]): Transform {
-    const mesh = this.getProperty<Mesh>("mesh");
-    mesh.translateX(position[0]);
-    mesh.translateY(position[1]);
-    mesh.translateZ(position[2]);
-    
-    position[0] = mesh.position.x
-    position[1] = mesh.position.y
-    position[2] = mesh.position.z
-    return this;
-  }
-
   public setPosition(position: number[]): Transform {
     const mesh = this.getProperty<ComponentProperty>("mesh").value as unknown as Mesh;
-    mesh.position.setX(position[0]);
-    mesh.position.setY(position[1]);
-    mesh.position.setZ(position[2]);
+    mesh.position.set(position[0], position[1], position[2]);
     return this;
   }
   get getPosition(): Array<number> {
@@ -56,7 +42,6 @@ export class Transform extends Component {
   }
 
   public setScale(scale: number) {
-    //this.updateProperty("scale", scale);
     const mesh = this.getProperty<ComponentProperty>("mesh").value as unknown as Mesh;
     mesh.scale.setX(scale);
     mesh.scale.setY(scale);

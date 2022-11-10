@@ -1,6 +1,6 @@
 import { createMachine, interpret } from "xstate";
 import { Engine } from "../Engine";
-import { GameEntity } from "../GameEntity";
+import { GameEntity } from "../entities/GameEntity";
 
 export interface EngineContext {
   engine: Engine;
@@ -49,7 +49,7 @@ createMachine<EngineContext, EngineEvent, EngineState>({
       on: {
         START_ENGINE: {
           actions: (context, muf) => {
-            context.engine.hud.init(context);
+            context.engine.hud.init();
             context.engine.start();
             console.log("Engine started.", muf, machine)
           },
