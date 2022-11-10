@@ -24,7 +24,6 @@ body {
 
 #entities {
     margin: 0px 20px;
-    overflow: scroll;
 }
 
 .entity {
@@ -40,7 +39,7 @@ body {
 }
 
 #entityList {
-    overflow: scroll;
+    overflow-y: scroll;
     height: 80%;
     position: fixed;
     width: 100%;
