@@ -24,9 +24,9 @@ export class Engine {
   private _lastIntersected: any;
   private _control: TransformControls<PerspectiveCamera>;
 
-  get lastIntersected(): any{
+  get lastIntersected(): any {
     return this._lastIntersected;
-  };
+  }
   get entities(): Array<Entity> {
     return this._entites;
   }
@@ -36,13 +36,13 @@ export class Engine {
   get hud(): Hud {
     return this._hud;
   }
-  get raycaster(): Raycaster{
+  get raycaster(): Raycaster {
     return this._raycaster;
   }
-  get renderer(): WebGLRenderer{
+  get renderer(): WebGLRenderer {
     return this._renderer;
   }
-  get control(): TransformControls<PerspectiveCamera>{
+  get control(): TransformControls<PerspectiveCamera> {
     return this._control;
   }
 
@@ -63,7 +63,10 @@ export class Engine {
     this.composer.addPass(new RenderPass(this._scene, this.camera));
 
     this.renderer.setSize(window.innerWidth, window.innerHeight);
-    this._control = new TransformControls(this.camera, this.renderer.domElement);
+    this._control = new TransformControls(
+      this.camera,
+      this.renderer.domElement
+    );
 
     this.scene.add(this.control);
 
@@ -120,13 +123,13 @@ export class Engine {
 
     if (intersects.length > 0) {
       if (this._lastIntersected != intersects[0].object) {
-
         this._lastIntersected = intersects[0].object;
-        this. _lastIntersected.material.color = { r: 1, g: 1, b: 0 };
+        this._lastIntersected.material.color = { r: 1, g: 1, b: 0 };
       }
     } else {
-      if (this._lastIntersected) this._lastIntersected.material.color = { r: 0, g: 1, b: 0 };
-      //this._lastIntersected = undefined;
+      if (this._lastIntersected) {
+        this._lastIntersected.material.color = { r: 0, g: 1, b: 0 };
+      }
     }
     requestAnimationFrame(() => this.update());
   }
