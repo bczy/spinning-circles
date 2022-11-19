@@ -5,7 +5,7 @@ type ValueTypes = number|Array<number>|string|Mesh|object;
 
 export type ComponentProperty = {
   value: ValueTypes,
-  callback: (e) => void
+  callback: (e: any) => void
 };
 
 export abstract class Component{

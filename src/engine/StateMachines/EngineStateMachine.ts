@@ -1,6 +1,7 @@
 import { createMachine, interpret } from "xstate";
 import { Engine } from "../Engine";
 import { GameEntity } from "../entities/GameEntity";
+import { onWindowResize } from "../Window";
 
 export interface EngineContext {
   engine: Engine;
@@ -45,21 +46,39 @@ createMachine<EngineContext, EngineEvent, EngineState>({
       },
     },
     loading: {
-      entry: () => {console.log("Loading...")},
+      entry: () => {
+        console.log("Loading...")
+      },
       on: {
         START_ENGINE: {
           actions: (context, muf) => {
-            context.engine.hud.init();
             context.engine.start();
-            console.log("Engine started.", muf, machine)
+            context.engine.hud.init();
+            console.log("Engine started.", muf, machine);
           },
           target: 'editing'
         },
       },
     },
     editing: {
-      entry: () => {
-        console.log("Edit mode...")
+      entry: ({engine}) => {
+        console.log("Edit mode...", engine);
+        //TODO add remove listener function and call it
+        engine.control.addEventListener('change', (e) => {
+          engine.hud.updateValues(engine.lastIntersected.uuid);
+        });
+
+        window.addEventListener('resize', () => {
+          onWindowResize(engine.camera, engine.renderer);
+        });
+        // todo: fullscreen
+        onWindowResize(engine.camera, engine.renderer);
+        document.addEventListener('mousemove', (e) => {
+          engine.onPointerMove(e);
+        });
+        document.addEventListener('mousedown', (e) => {
+          engine.onPointerDown(e);
+        });
       },
       on: {
         ADD_GAME_ENTITY: {
