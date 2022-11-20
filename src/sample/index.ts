@@ -1,6 +1,6 @@
 import EngineStateMachine from '../engine/StateMachines/EngineStateMachine';
 
-export class SpinningCircle {
+export class Sample {
   private _engineService = EngineStateMachine;
 
   constructor() {

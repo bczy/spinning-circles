@@ -29,10 +29,6 @@ const machine =
   createMachine<EngineContext, EngineEvent, EngineState>({
     id: 'EngineStateMachine',
     initial: 'idle',
-    schema: {
-      context: engineContext as EngineContext,
-      events: {} as EngineEvent,
-    },
     context: engineContext,
     predictableActionArguments: true,
     states: {
@@ -44,8 +40,11 @@ const machine =
         },
       },
       loading: {
-        entry: () => {
+        entry: ({ engine }) => {
           console.log('Loading...');
+          window.addEventListener('resize', () => {
+            onWindowResize(engine.camera, engine.renderer);
+          });
         },
         on: {
           START_ENGINE: {
@@ -60,15 +59,11 @@ const machine =
       },
       editing: {
         entry: ({ engine }) => {
-          console.log('Edit mode...', engine);
-          //TODO add remove listener function and call it
-          engine.control.addEventListener('change', (e) => {
+          console.log('Entering edit mode...', engine);
+          engine.control.addEventListener('change', () => {
             engine.hud.updateValues(engine.lastIntersected.uuid);
           });
 
-          window.addEventListener('resize', () => {
-            onWindowResize(engine.camera, engine.renderer);
-          });
           // todo: fullscreen
           onWindowResize(engine.camera, engine.renderer);
           document.addEventListener('mousemove', (e) => {
@@ -77,6 +72,19 @@ const machine =
           document.addEventListener('mousedown', (e) => {
             engine.onPointerDown(e);
           });
+        },
+        exit: ({ engine }) => {
+          console.log('Exiting edit mode...', engine);
+          /* TODO decide where and how sotre hud events 
+          engine.control.removeEventListener('change', () => {
+            engine.hud.updateValues(engine.lastIntersected.uuid);
+          });
+          document.removeEventListener('mousemove', (e) => {
+            engine.onPointerMove(e);
+          });
+          document.removeEventListener('mousedown', (e) => {
+            engine.onPointerDown(e);
+          }); */
         },
         on: {
           ADD_GAME_ENTITY: {

@@ -1,5 +1,5 @@
-import { SpinningCircle } from "./spinning-circles/SpinningCircles";
+import { Sample } from "./sample";
 
-const spinningCircle = new SpinningCircle();
+const spinningCircle = new Sample();
 
 document.body.style.margin = '0';
