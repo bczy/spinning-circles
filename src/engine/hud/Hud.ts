@@ -18,7 +18,10 @@ import machine, {
 import { createEntity } from './Entity';
 import { updateInputs } from './utils';
 
+import ControlPanel from './index.svelte';
+
 export class Hud {
+
   private _engineService: Interpreter<
     EngineContext,
     any,
@@ -48,7 +51,11 @@ export class Hud {
     });
   }
 
-  public constructor(private _engineEntities: Array<Entity>) {}
+  public constructor(private _engineEntities: Array<Entity>) {
+    /*const app = new ControlPanel({
+      target: document.body,
+    });*/
+  }
 
   public addGameEntity() {
     this._engineService.send('ADD_GAME_ENTITY');

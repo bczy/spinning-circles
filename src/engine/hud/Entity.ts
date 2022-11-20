@@ -1,6 +1,8 @@
 import { Entity } from "../entities/Entity";
 import { createDomElement } from "./utils";
 
+          // TODO SVELTE WHOLE FOLDER!
+
 export function createEntity(entity: Entity){
     const entityArticle = createDomElement('article', entity.uuid,'entity');
     entity.components.forEach((component) => {
@@ -29,6 +31,7 @@ export function createEntity(entity: Entity){
             d.appendChild(input);
           });
         } else if (typeof propertyValue.value === 'number') {
+          // TODO SVELTE THAT!
           const input = createDomElement('input','','input') as HTMLInputElement;
           input.type = "number";
           input.value = propertyValue.value.toString();
