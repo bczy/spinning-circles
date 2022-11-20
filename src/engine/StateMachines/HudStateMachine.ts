@@ -37,6 +37,11 @@ createMachine<HudContext, HudEvent, EngineState>({
             console.log(context);
           },
         },
+        UNSELECT: {
+          actions: (context) => {
+            console.log(context);
+          },
+        },
       },
     },
   },
