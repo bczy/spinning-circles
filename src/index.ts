@@ -1,10 +1,5 @@
-import { SpinningCircle } from "./SpinningCircles";
-import { onWindowResize } from './engine/graphics/Window';
+import { Sample } from "./sample";
 
-const spinningCircle = new SpinningCircle();
+const spinningCircle = new Sample();
 
-document.body.appendChild(spinningCircle.engine.renderer.domElement);
-window.addEventListener('resize', () =>
-  onWindowResize(spinningCircle.engine.camera, spinningCircle.engine.renderer)
-);
 document.body.style.margin = '0';

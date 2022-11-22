@@ -1,5 +1,11 @@
 {
+    "extends": "@tsconfig/svelte/tsconfig.json",
     "compilerOptions": {
-        "target": "es6"
-    }
+        "target": "ESNext",
+        "moduleResolution" : "node",
+        "importsNotUsedAsValues": "remove",
+        "isolatedModules" :false
+    },
+    "include": ["src/**/*"],
+    "exclude": ["node_modules/*"]
 }

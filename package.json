@@ -6,9 +6,8 @@
     "./dist"
   ],
   "scripts": {
-    "build": "webpack --config ./bundler/webpack.prod.js",
-    "dev": "webpack-dev-server --config ./bundler/webpack.dev.js",
-    "start": "webpack-dev-server --config ./bundler/webpack.dev.js",
+    "build": "webpack -c ./bundler/webpack.prod.js",
+    "start": "webpack serve -c ./bundler/webpack.dev.js --progress",
     "deploy": "npm run build && gh-pages -d dist -b master",
     "depcheck": "depcheck"
   },
@@ -17,6 +16,7 @@
   "devDependencies": {
     "@babel/core": "^7.18.13",
     "@babel/preset-env": "^7.18.10",
+    "@tsconfig/svelte": "^3.0.0",
     "babel-loader": "^8.2.5",
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^5.1.2",
@@ -32,16 +32,24 @@
     "raw-loader": "^4.0.2",
     "serve": "^13.0.4",
     "style-loader": "^1.3.0",
-    "three": "^0.134",
-    "ts-loader": "^9.3.1",
-    "webpack": "^5.74.0",
-    "webpack-cli": "^3.3.12",
-    "webpack-dev-server": "^3.11.3",
-    "webpack-merge": "^4.2.2"
+    "three": "^0.138",
+    "ts-loader": "^9.3.1"
   },
   "dependencies": {
     "@types/three": "^0.134.0",
+    "@xstate/cli": "^0.3.3",
+    "@xstate/svelte": "^2.0.0",
     "depcheck": "^1.4.3",
-    "typescript": "^4.8.2"
+    "mini-css-extract-plugin": "^2.7.0",
+    "svelte": "^3.53.1",
+    "svelte-loader": "^3.1.4",
+    "svelte-preprocess": "^4.10.7",
+    "three-stdlib": "^2.17.3",
+    "typescript": "^4.8.2",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.0",
+    "webpack-dev-server": "^4.11.1",
+    "webpack-merge": "^5.8.0",
+    "xstate": "^4.34.0"
   }
 }

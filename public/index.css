@@ -1,0 +1,63 @@
+body {
+    font-family: 'arial';
+}
+
+#hud {
+    position: fixed;
+    right: 0;
+    float: right;
+    width: 350px;
+
+}
+
+#controls {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    flex-flow: nowrap;
+    gap: 10px;
+}
+
+#controls button {
+    width: 40%;
+}
+
+#entities {
+    margin: 0px 20px;
+}
+
+.entity {
+    margin: 10px 5px;
+    font-size: 12px;
+}
+
+.component {
+    margin: 10px 0px;
+    border: 1px solid #ccc;
+    width: 300px;
+    padding: 2px 5px;
+}
+
+#entityList {
+    overflow-y: scroll;
+    height: 80%;
+    position: fixed;
+    width: 100%;
+}
+
+.inputBox {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    margin-block: 5px;
+}
+
+.entity {
+    border: 1px solid #ccc;
+    padding: 5px;
+}
+
+.input{
+    width: 50px;
+}
